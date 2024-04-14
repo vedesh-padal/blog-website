@@ -1,29 +1,18 @@
 import { Hono } from 'hono'
+import { userRouter } from './routes/user';
+import { blogRouter } from './routes/blog';
 
-const app = new Hono()
+const app = new Hono<{
+  Bindings: {
+    DATABASE_URL: string,
+    JWT_SECRET: string,
+  },
+  Variables: {
+    userId: string
+  }
+}>();
 
-app.post('/api/v1/user/signup', (c) => {
-  return c.text('Sign Up route!')
-})
-
-app.post('/api/v1/user/signin', (c) => {
-  return c.text('Sign in Route')
-})
-
-app.post('/api/v1/blog', (c) => {
-  return c.text('create a blog')
-})
-
-app.put('/api/v1/blog/', (c) => {
-  return c.text('edit the blog')
-})
-
-app.get('/api/v1/blog/:id', (c) => {
-  return c.text('get a particular blog')
-})
-
-app.get('/api/v1/blog/bulk', (c) => {
-  return c.text('get all blogs')
-})
+app.route('/api/v1/user', userRouter)
+app.route('/api/v1/blog', blogRouter)
 
 export default app
