@@ -80,7 +80,6 @@ blogRouter.put('/', async (c) => {
             message: "Incorrect inputs"
         })
     }
-    
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL
     }).$extends(withAccelerate())
